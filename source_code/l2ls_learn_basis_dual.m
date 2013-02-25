@@ -17,7 +17,7 @@ L = size(X,1);
 N = size(X,2);
 M = size(S, 1);
 
-tic
+% tic
 SSt = S*S';
 XSt = X*S';
 
@@ -31,7 +31,7 @@ c = l2norm^2;
 trXXt = sum(sum(X.^2));
 
 lb=zeros(size(dual_lambda));
-options = optimset('GradObj','on', 'Hessian','on');
+options = optimset('GradObj','on', 'Hessian','on','Display','off');
 %  options = optimset('GradObj','on', 'Hessian','on', 'TolFun', 1e-7);
 x=zeros(1, L);
 [x, fval, exitflag, output] = fmincon(@(x) fobj_basis_dual(x, SSt, XSt, X, c, trXXt), dual_lambda, [], [], [], [], lb, [], [], options);
@@ -46,7 +46,7 @@ fobjective_dual = fval_opt;
 
 B= B_dual;
 fobjective = fobjective_dual;
-toc
+% toc
 
 return;
 
