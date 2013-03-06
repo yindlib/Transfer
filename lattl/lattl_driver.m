@@ -1,4 +1,15 @@
-%% Nuisance paramters
+% Load the data
+clear
+clc
+load('../source_data/landmine/landmine_source_data_unbal.mat')
+Xs = [data_store.instance]';
+ys = [data_store.label]';
+
+load('../source_data/landmine/landmine_target_data6.mat')
+Xt = [data_store.instance]';
+yt = [data_store.label]';
+
+% Nuisance paramters
 params.C1       = 0.1; %0.1;     % C1: cost, Err_recon(A)   (source)
 params.C2       = 5; %10;      % C2: cost, Err_svm(A,y)   (source, labeled)
 params.C3       = 0.5; %0.3;     % C3: cost, Err_recon(E)   (target)
