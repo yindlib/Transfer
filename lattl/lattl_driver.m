@@ -1,13 +1,17 @@
 % Load the data
 clear
 clc
+cd('C:\Users\Taha\Documents\GitHub\Transfer\lattl')
+addpath('C:\Users\Taha\Documents\MATLAB\LibSVM')
+addpath('C:\gurobi510\win64\matlab')
+
 load('../source_data/landmine/landmine_source_data_unbal.mat')
 Xs = [data_store.instance]';
-ys = [data_store.label]';
+ys = double([data_store.label]');
 
 load('../source_data/landmine/landmine_target_data6.mat')
 Xt = [data_store.instance]';
-yt = [data_store.label]';
+yt = double([data_store.label]');
 
 % Nuisance paramters
 params.C1       = 0.1; %0.1;     % C1: cost, Err_recon(A)   (source)
@@ -54,11 +58,11 @@ for i=1:length(C2)
     svmparams = sprintf('-t 0 -h 0 -c %f -w1 %f -w2 %f', ...
                         params.C2, params.cw(1), params.cw(2))
 
-    model = svmtrain2(ys, A_pca, svmparams);
+    model = svmtrain(ys, A_pca, svmparams);
     [yhat, ~, ydv] = svmpredict(yt, E_pca, model);
     
     % Evaluate performance
-    perf = eval_fave_metrics(yt, yhat, ydv);
+    perf = perf_fave_metrics(yt, yhat, ydv);
     perf.recon = norm(Xt - E_pca * Psi_pca', 'fro') / size(E_pca, 1);
 %     R2 = (1/300)*(sqrt(trace(E_pca'*E_pca)));
 %     fprintf('PCA+SVM: %s    R2=%1.5g\n', s, R2)

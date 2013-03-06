@@ -1,4 +1,4 @@
-function avg = perf_avg_fave_metrics(perfs)
+function avg = eval_fave_metrics(perfs)
 
 avg.a = mean([ perfs.a ]);
 avg.f1 = mean([ perfs.f1 ]);
